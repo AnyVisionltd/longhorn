@@ -63,10 +63,10 @@ spec:
           mountPath: /var/run/
           mountPropagation: Bidirectional
         - name: longhorn
-          mountPath: /var/lib/longhorn/
+          mountPath: /storage/longhorn/
           mountPropagation: Bidirectional
         - name: longhorn-default-setting
-          mountPath: /var/lib/longhorn-setting/
+          mountPath: /storage/longhorn-setting/
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -81,7 +81,7 @@ spec:
             fieldRef:
               fieldPath: spec.nodeName
         - name: DEFAULT_SETTING_PATH
-          value: /var/lib/longhorn-setting/default-setting.yaml
+          value: /storage/longhorn-setting/default-setting.yaml
       volumes:
       - name: dev
         hostPath:
@@ -94,7 +94,7 @@ spec:
           path: /var/run/
       - name: longhorn
         hostPath:
-          path: /var/lib/longhorn/
+          path: /storage/longhorn/
       - name: longhorn-default-setting
         configMap:
           name: longhorn-default-setting
