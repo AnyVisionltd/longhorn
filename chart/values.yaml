@@ -22,8 +22,8 @@ service:
     nodePort: ""
 
 persistence:
-  defaultClass: true
-  defaultClassReplicaCount: 3
+  defaultClass: false
+  defaultClassReplicaCount: 2
 
 csi:
   attacherImage: ~
@@ -39,12 +39,12 @@ defaultSettings:
   backupTarget: ~
   backupTargetCredentialSecret: ~
   createDefaultDiskLabeledNodes: ~
-  defaultDataPath: ~
+  defaultDataPath: /storage/longhorn
   replicaSoftAntiAffinity: ~
   storageOverProvisioningPercentage: ~
   storageMinimalAvailablePercentage: ~
   upgradeChecker: ~
-  defaultReplicaCount: ~
+  defaultReplicaCount: 2
   guaranteedEngineCPU: ~
   defaultLonghornStaticStorageClass: ~
   backupstorePollInterval: ~
@@ -77,10 +77,9 @@ resources: {}
 
 ingress:
   ## Set to true to enable ingress record generation
-  enabled: false
+  enabled: true
 
-
-  host: xip.io
+  host: longhorn.anv
 
   ## Set this to true in order to enable TLS on the ingress record
   ## A side effect of this will be that the backend service will be connected at port 443
@@ -98,7 +97,10 @@ ingress:
   ##
   ## If tls is set to true, annotation ingress.kubernetes.io/secure-backends: "true" will automatically be set
   annotations:
-  #  kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: ingress-basic-auth-secret
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required '
   #  kubernetes.io/tls-acme: true
 
   secrets:
